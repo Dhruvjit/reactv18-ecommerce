@@ -1,11 +1,34 @@
 import Home from './routes/home/home.component';
-import {Routes, Route} from 'react-router-dom';
+import {Routes, Route, Outlet} from 'react-router-dom';
+import Navigation from './routes/navigation/navigation.component';
+
+const Shop = () => {
+  return <h1>I am the shop page</h1>
+}
+
+const Shop1 = () => {
+  return (
+    <div>
+      <div>
+        <h1>I am the shop 1 page</h1>
+      </div>
+    </div>
+  )
+}
 
 const App = () => {
   return (
-    <Routes>
-      <Route path='/' element={ <Home/> }/>
-    </Routes>
+    <div>
+      {/* here navigation will be common top element, and '/', and '/shop' will be base components */}
+      <Routes>
+        <Route path='/' element={ <Navigation/> }>        
+          <Route index element={ <Home/> } />
+          <Route path='/shop' element={ <Shop/> }>
+            <Route path='1' element={ <Shop1/> } />
+          </Route>
+        </Route>
+      </Routes>
+    </div>
   );
 }
 
