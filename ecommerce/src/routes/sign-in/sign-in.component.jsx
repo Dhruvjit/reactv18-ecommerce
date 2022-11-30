@@ -9,7 +9,7 @@ const SignIn = () => {
             related object that also contains access token 
         */
         console.log(response);
-        createUserDocumentFromAuth(response.user);
+        const userDocRef = createUserDocumentFromAuth(response.user);
     }
     return (
         <div>
