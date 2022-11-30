@@ -1,7 +1,22 @@
+import { signInWithGooglePopup, createUserDocumentFromAuth } from "../../utils/firebase.utils";
+
 const SignIn = () => {
+
+    const logGoogleUser = async () => {
+        const response = await signInWithGooglePopup();
+        /* 
+            response here returns a long userCredentails 
+            related object that also contains access token 
+        */
+        console.log(response);
+        createUserDocumentFromAuth(response.user);
+    }
     return (
         <div>
             <h1> Sign in Page </h1>
+            <button onClick={logGoogleUser}>
+                Sign in with Google Popup
+            </button>
         </div>
     )
 }
