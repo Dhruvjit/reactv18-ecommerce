@@ -30,13 +30,19 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 /* Start a sign in process for an unauthenticated user  */
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
     prompt: "select_account"
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+/*  */
+
+// sign in using popup from google
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+// sign in using redirect
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
+
 export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async (userAuth) => {
