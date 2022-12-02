@@ -9,7 +9,7 @@ is hosted on firebase
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
 import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -45,7 +45,7 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation={}) => {
     /* creates a virtual path with 'users' as document name that 
         points to the unique id received from userAuth obj 
     */
@@ -64,13 +64,19 @@ export const createUserDocumentFromAuth = async (userAuth) => {
                 {
                     displayName, 
                     email, 
-                    createdAt
+                    createdAt,
+                    ...additionalInformation
                 }
             );
         }catch(error){
-            console.log('error creating the user ', error.message);
+            console.log('error creating the user document ', error.message);
         }
     }
     // if user data already exists
     return userDocRef;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return;
+    return await createUserWithEmailAndPassword(auth, email, password);
 }
